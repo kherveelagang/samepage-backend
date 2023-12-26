@@ -35,21 +35,11 @@ class BookmarkController extends Controller
         return $bookmark;
     }
 
-    /**
-     * Remove the specified resource from storage.
+      /**
+     * Display the specified resource.
      */
-    public function destroy(string $id)
+    public function show(string $id)
     {
-         // Fetch the book from the database
-         $book = Bookmark::findOrFail($id);
-        
-         // Check if the user is authorized to update the book
-         if (Gate::denies('delete', $book)) {
-             abort(403, 'Unauthorized');
-     }
- 
-         $book->delete();
- 
-         return response()->json(['message' => 'Bookmarked book deleted successfully']);
+        return Bookmark::findOrfail($id);
     }
 }

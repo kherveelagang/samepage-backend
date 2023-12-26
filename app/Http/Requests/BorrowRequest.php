@@ -28,19 +28,10 @@ class BorrowRequest extends FormRequest
         $ownerId = Book::find($bookId)->owner_id;
 
         return [
-            'borrower_id' => 'required|integer|exists:users,id',
-            'book_id' => 'required|integer|exists:books,book_id',
-            'status' => 'required|in:pending,accepted,declined',
-            'return_date' => 'nullable|date',
-            'canceled_at' => 'nullable|date',
-            'book_owner_check' => [
-                'required',
-                function ($attribute, $value, $fail) use ($userId, $ownerId) {
-                    if ($userId === $ownerId) {
-                        $fail('The borrower cannot be the owner of the book.');
-                    }
-                },
-            ],
+            'book_id'           => 'required|integer|exists:books,book_id',
+            'return_date'       => 'required|date',
+            'canceled_at'       => 'nullable|date',
+
         ];
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use App\Models\Borrow;
+use App\Models\Book;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\BorrowRequest;
 use Illuminate\Support\Facades\Gate;
@@ -24,13 +25,20 @@ class BorrowController extends Controller
      */
     public function store(BorrowRequest $request)
     {
-        $validated = $request->validated();
+       // Retrieve the validated input data
+       $validated = $request->validated();
+
+       $book = Book::findOrFail($validated['book_id']);
+
+       if ($book->owner_id == auth()->id()) {
+        return response()->json(['message' => 'You cannot borrow your own book.'], 403);
+    }
+
+        $validated['borrower_id'] = auth()->id();
 
         $borrow = Borrow::create($validated);
 
-        // Notify the owner or handle notifications as needed
-
-        return $borrow;
+       return $borrow;
     }
 
     /**
@@ -39,14 +47,6 @@ class BorrowController extends Controller
     public function show(string $id)
     {
         return Borrow::findOrfail($id);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
     }
 
     /**

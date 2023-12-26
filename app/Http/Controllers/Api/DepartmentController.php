@@ -29,7 +29,7 @@ class DepartmentController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($id)
     {
          // Retrieve the department with its associated books
         $department = Department::with('books')->findOrFail($id);

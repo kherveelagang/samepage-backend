@@ -22,6 +22,7 @@ class BookRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'book_id'               =>  'integer',
             'title'                 =>  'string|max:255',
             'author'                =>  'string|max:255',
             'ISBN'                  =>  'required|string|max:13|unique:App\Models\Book,ISBN|regex:/^\d{13}$/',
@@ -32,9 +33,8 @@ class BookRequest extends FormRequest
             'owner_facebook'        =>  'string|nullable|max:255',
             'owner_instagram'       =>  'string|nullable|max:255',
             'custom_contact_link'   =>  'string|nullable|max:255',
-            'owner_id'              =>  'required|integer',
             'department_id'         =>  'required|integer',
-            'status'                =>  'required|in:available,unavailable'
+            'status'                =>  'nullable|in:available,unavailable',
         ];
     }
 }

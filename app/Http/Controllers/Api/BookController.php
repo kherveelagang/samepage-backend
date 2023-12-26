@@ -27,6 +27,8 @@ class BookController extends Controller
         // Retrieve the validated input data...
         $validated = $request->validated();
 
+        $validated['owner_id'] = auth()->id();
+
         $book = Book::create($validated);
         
         return $book;

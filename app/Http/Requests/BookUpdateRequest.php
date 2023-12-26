@@ -22,9 +22,9 @@ class BookUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'ISBN' => 'required|string|max:13|unique:books,ISBN,' . $this->route('id'),
-            'publication_year'  => 'required|integer',
-            'department_id'     => 'required|integer',
+            'ISBN' => 'string|max:13|unique:books,ISBN,' . $this->route('id'),
+            'publication_year'  => 'integer',
+            'department_id'     => 'integer',
         ];
     }
 }
